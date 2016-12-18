@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>github测试文件</title>
+</head>
+<body>
+	<h1>如果我的双手没有颤抖，我一定爆你的头</h1>
+	<script type="text/javascript">
+		function Shape(){}
+		Shape.prototype.name = 'Shape';
+		Shape.prototype.toString = function(){
+			return this.name;
+		}
+		function TwoDshape(){}
+		TwoDshape.prototype = new Shape();
+		TwoDshape.prototype.constructor = TwoDshape;
+		TwoDshape.prototype.name = '2d shape';
+		function Triangle(side,height){
+			this.side = side;
+			this.height = height;
+		}
+		Triangle.prototype = new TwoDshape();
+		Triangle.prototype.constructor = Triangle;
+		Triangle.prototype.name = 'Triangle';
+		Triangle.prototype.getArea = function (){
+			return this.side * this.height / 2;
+		}
+		var my = new Triangle(5,10);
+		my.toString();
+
+
+	</script>
+</body>
+</html>
