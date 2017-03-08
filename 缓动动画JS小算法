@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1"  />
+		<title>小算法合集</title>
+	</head>
+	<body>
+		<div style="height: 7200px; border: 1px solid red;"></div>
+		<div style="width: 30px;height: 30px;position: fixed;bottom: 80px;right: 0; background-color: green;" id="toTop"></div>
+		<script>
+			//requestAnimationFrame兼容性
+			if(!window.requestAnimationFrame){
+				requestAnimationFrame = function(fn){
+					setTimeout(fn,17);
+				};				
+			}
+			
+			//等比递减公式：A = A + (B - A)/rate;
+			//A:起点位置
+			//B:终点位置
+			//rate:速率
+			
+			//返回顶部效果
+			//rate为速率
+			var backTop = function(rate){
+				var doc = document.body.scrollTop? document.body: document.documentElement;
+				var scroll = doc.scrollTop;
+				scroll = scroll + (0 - scroll)/8;
+				 // 临界判断，终止动画
+		        if (scroll < 1) {
+		            doc.scrollTop = 0;
+		            return;
+		        }
+				doc.scrollTop = scroll;
+				requestAnimationFrame(backTop);	
+				
+			};
+			
+			Math.easeout = function(A,B,rate,callback){
+				if(A == B || typeof A != 'number'){
+					return;
+				}
+				B = B || 0;
+				rate = rate || 2;
+				var step = function(){
+					A = A + (B - A)/rate;
+					if(A<1){
+						callback(B,true);
+						return;
+					}
+					callback(A,false);
+					requestAnimationFrame(step);
+				};
+				step();
+			};
+			
+			
+			var topTop = document.getElementById("toTop");
+			//topTop.addEventListener('click',backTop,false);
+			
+			topTop.addEventListener('click',function(){
+				var doc = document.body.scrollTop? document.body: document.documentElement;				
+				Math.easeout(doc.scrollTop,0,40,function(value){
+					doc.scrollTop = value;
+				});
+			},false)
+			
+		</script>
+	</body>
+</html>
